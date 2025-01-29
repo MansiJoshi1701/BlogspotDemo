@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This is my demo Blogspot
+This is my demo Blogspot.
 
 ## Available Scripts
 
