@@ -3,14 +3,7 @@ import BlogList from "./BlogList";
 
 const Home = () => {
 
-    const [blogs , setBlogs] = useState([
-
-        { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
-        { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
-        { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
-    ])
-
-    const [name , setName] = useState('Mansi');
+    const [blogs , setBlogs] = useState(null)
     
 
     const handleDelete = (id) => {
@@ -22,13 +15,20 @@ const Home = () => {
 
     useEffect(() => {
         //This function runs at EVERY RENDER i.e. everytime page changes, this function runs
-        console.log('useEffect ran');
-        console.log(blogs);
+        //If I only want it to run once on initial render, then pass and empty dependancy array []
+        fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json(); //parses the res object into a json object
+            })
+            .then(data => { //this will fire once above then function is executed i.e. once res is fully received
+                setBlogs(data);
+            })
     } , [])
 
     return ( 
         <div className="home">
-            <BlogList Blogs={blogs} title="All Blogs!" handleDelete={handleDelete}/>
+            {blogs && <BlogList Blogs={blogs} title="All Blogs!" handleDelete={handleDelete}/>}
+            
         </div>
      );
 }
