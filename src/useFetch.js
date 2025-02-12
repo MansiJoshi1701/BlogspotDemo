@@ -8,24 +8,25 @@ const useFetch = (url) => {
     
 
     useEffect(() => {
-        
-        fetch(url)
-            .then(res => {
-                if(!res.ok){
-                    throw Error('Could not fetch data for that resource');
-                }
-                return res.json(); //parses the res object into a json object
-            })
-            .then(data => { //this will fire once above 'then' function is executed i.e. once res is fully received
-                setData(data);
-                setIsPending(false);
-                setError(null);
-            })
-            .catch(err => {
-                setError(err.message);
-                setIsPending(false);
+        setTimeout(() => {
+            fetch(url)
+                .then(res => {
+                    if(!res.ok){
+                        throw Error('Could not fetch data for that resource');
+                    }
+                    return res.json(); //parses the res object into a json object
+                })
+                .then(data => { //this will fire once above 'then' function is executed i.e. once res is fully received
+                    setData(data);
+                    setIsPending(false);
+                    setError(null);
+                })
+                .catch(err => {
+                    setError(err.message);
+                    setIsPending(false);
 
-            })
+                })
+        } , 1000)
     } , [url])
 
     return {data , isPending , error};
