@@ -5,11 +5,26 @@ const Create = () => {
     const [title , setTitle] = useState('');
     const [body , setBody] = useState('');
     const [author , setAuthor] = useState('');
+    const [isPending , setIsPending] = useState(false);
 
     const handleSubmit = (e) => {
+
+        setIsPending(true);
+
         e.preventDefault();
         const blog = { title , body , author };
-        console.log(blog);
+        
+        //we're now going to send a POST request for adding this new data in our json db
+        fetch('http://localhost:8000/blogs' , {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(blog) //this is to convert the blog object to a json string
+
+        })
+        .then(() => { //since fetch is an asynchronous function so we can use then method on it
+            console.log('new blog added');
+            setIsPending(false);
+        })
     }
 
     return ( 
@@ -39,8 +54,8 @@ const Create = () => {
                     <option value="mansi">Mansi</option>
                     <option value="joshi">Joshi</option>
                 </select>
-                <button>Add Blog</button>
-                <p>{ title }</p>
+                {!isPending && <button>Add Blog</button>}
+                {isPending && <button disabled>Adding Blog...</button>}
             </form>
         </div>
      );
