@@ -6,16 +6,22 @@ const Create = () => {
     const [body , setBody] = useState('');
     const [author , setAuthor] = useState('');
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const blog = { title , body , author };
+        console.log(blog);
+    }
+
     return ( 
         <div className="create">
             <h2>Add a New Blog</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>Blog title: </label>
                 <input 
                     type="text"
-                    required                                       
+                    required
                     onChange={(e) => setTitle(e.target.value)}
-                    value = {title}
+                    //value = {title}
                     //onChange is used to tell React to only re-render based on when I say and not at all times.
                     //So here i want it to re-render anytime there's change in this specific field                     
                 />
@@ -34,6 +40,7 @@ const Create = () => {
                     <option value="joshi">Joshi</option>
                 </select>
                 <button>Add Blog</button>
+                <p>{ title }</p>
             </form>
         </div>
      );
