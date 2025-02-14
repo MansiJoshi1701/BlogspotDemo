@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
 
@@ -6,6 +7,7 @@ const Create = () => {
     const [body , setBody] = useState('');
     const [author , setAuthor] = useState('');
     const [isPending , setIsPending] = useState(false);
+    const history = useHistory();
 
     const handleSubmit = (e) => {
 
@@ -24,6 +26,7 @@ const Create = () => {
         .then(() => { //since fetch is an asynchronous function so we can use then method on it
             console.log('new blog added');
             setIsPending(false);
+            history.push('/');
         })
     }
 
